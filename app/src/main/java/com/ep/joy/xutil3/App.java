@@ -16,6 +16,5 @@ public class App extends Application {
         super.onCreate();
         x.Ext.init(this);
         x.Ext.setDebug(true); // 是否输出debug日志
-
     }
 }
