@@ -14,8 +14,7 @@ import android.widget.Scroller;
 import com.ep.joy.xutil3.R;
 import com.ep.joy.xutil3.entity.ImageInfo;
 import com.ep.joy.xutil3.util.JsoupTool;
-import com.ep.joy.xutil3.util.UrlBean;
-import com.tomandjerry.coolanim.lib.CoolAnimView;
+import com.ep.joy.xutil3.entity.UrlBean;
 
 import org.xutils.x;
 
@@ -25,7 +24,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.materialdialog.MaterialDialog;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -118,11 +116,6 @@ public class ShowActivity extends AppCompatActivity {
         }
     }
 
-
-    public void showdialog(View view) {
-        MaterialDialog mMaterialDialog = new MaterialDialog(this).setContentView(new CoolAnimView(ShowActivity.this));
-        mMaterialDialog.show();
-    }
 
     private class PicLoopAdapter extends PagerAdapter {
 

@@ -1,5 +1,9 @@
 package com.ep.joy.xutil3.util;
 
+import android.text.TextUtils;
+
+import com.jiongbull.jlog.JLog;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -183,7 +187,7 @@ public class DataUtil {
         try {
             returnDate = dateFormat.parse(strDate);
         } catch (ParseException e) {
-            LogUtils.e("parseDate failed !");
+            JLog.e("parseDate failed !");
 
         }
         return returnDate;
@@ -365,7 +369,7 @@ public class DataUtil {
      * @return
      */
     public static int getAge(String birthday) {
-        if (StrUtil.isEmpty(birthday)) return 0;
+        if (TextUtils.isEmpty(birthday)) return 0;
         String yearStr = birthday.substring(0, 4);
         int integer = Integer.parseInt(yearStr);
         int newYear = new GregorianCalendar().get(Calendar.YEAR);

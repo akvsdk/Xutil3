@@ -2,6 +2,7 @@ package com.ep.joy.xutil3.util;
 
 
 import com.ep.joy.xutil3.entity.ImageInfo;
+import com.ep.joy.xutil3.entity.UrlBean;
 import com.jiongbull.jlog.JLog;
 
 import org.jsoup.Jsoup;

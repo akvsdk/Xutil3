@@ -1,11 +1,19 @@
 package com.ep.joy.xutil3.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.ep.joy.xutil3.R;
+
+import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -44,6 +52,46 @@ public class GlideProxy {
                 .into(imageView);
     }
 
+    //以bitmap加载图片
+    public void loadbitmap(Context context, String url, SimpleTarget<Bitmap> listener) {
+        Glide.with(context)
+                .load(url)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(listener);
+    }
+
+    //以gif加载图片
+    public void loadgif(Context context, String url, SimpleTarget<GifDrawable> listener) {
+        Glide.with(context)
+                .load(url)
+                .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(listener);
+    }
+
+    //以gif保存图片
+    public File savegif(Context context, String url) {
+        File file = null;
+        try {
+            file = Glide.with(context)
+                    .load(url)
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (file != null) {
+            return file;
+        } else {
+            return null;
+        }
+
+    }
+
     // 加载本地图片
     public void loadLocalImage(Context context, String path, ImageView imageView) {
         Glide.with(context)
@@ -54,12 +102,23 @@ public class GlideProxy {
                 .into(imageView);
     }
 
+
+
+    /*
+    DiskCacheStrategy.SOURCE：缓存原始数据，
+    DiskCacheStrategy.RESULT：缓存变换后的资源数据，
+    DiskCacheStrategy.NONE：什么都不缓存，
+    DiskCacheStrategy.ALL：缓存SOURC和RESULT。默认采用DiskCacheStrategy.RESULT策略，
+    对于download only操作要使用DiskCacheStrategy.SOURCE。
+     */
+
     // 加载网络图片
     public void loadImage(Context context, String url, ImageView imageView) {
         Glide.with(context)
                 .load(url)
                 .animate(R.anim.image_load)
                 .placeholder(R.color.material_white)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .error(R.color.material_white)
                 .crossFade()
                 .into(imageView);
@@ -103,6 +162,12 @@ public class GlideProxy {
     // 清理缓存
     public static void clear(Context context) {
         Glide.get(context).clearMemory();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Glide.get(context).clearDiskCache();
+//            }
+//        }).start();
     }
 
 }

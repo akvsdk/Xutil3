@@ -1,6 +1,7 @@
 package com.ep.joy.xutil3;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.ep.joy.xutil3.imageloader.ImageLoaderUtil;
 import com.jiongbull.jlog.JLog;
@@ -18,12 +19,16 @@ import java.util.List;
  * Description:
  */
 public class App extends Application {
+   public static Context mContext;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         List<LogLevel> logLevels = new ArrayList<>();
         logLevels.add(LogLevel.ERROR);
         logLevels.add(LogLevel.JSON);
+        mContext = getApplicationContext();
 
         x.Ext.init(this);
         x.Ext.setDebug(true); // 是否输出debug日志
@@ -36,4 +41,9 @@ public class App extends Application {
                 .setDebug(BuildConfig.DEBUG);
         ImageLoaderUtil.init(this);
     }
+
+    public Context getContext() {
+        return mContext;
+    }
+
 }
