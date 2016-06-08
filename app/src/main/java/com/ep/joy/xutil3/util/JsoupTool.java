@@ -87,6 +87,7 @@ public class JsoupTool {
                     imgList.add(img);
                 }
             }
+            imgList.remove(0);
             return imgList;
 
 

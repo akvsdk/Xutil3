@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:onClick="send2"
+            android:onClick="send"
             android:text="Bean"/>
     </RelativeLayout>
 

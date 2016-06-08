@@ -120,5 +120,20 @@ public class YourBean implements Serializable {
         public int getAppType() {
             return appType;
         }
+
+        @Override
+        public String toString() {
+            return "ListEntity{" +
+                    "extension=" + extension +
+                    ", signEndTime='" + signEndTime + '\'' +
+                    ", macthImg='" + macthImg + '\'' +
+                    ", macthId=" + macthId +
+                    ", releaseName='" + releaseName + '\'' +
+                    ", money=" + money +
+                    ", macthName='" + macthName + '\'' +
+                    ", extensionMoney='" + extensionMoney + '\'' +
+                    ", appType=" + appType +
+                    '}';
+        }
     }
 }

@@ -5,15 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ep.joy.xutil3.R;
 import com.ep.joy.xutil3.adapter.YouAdapter;
-import com.ep.joy.xutil3.entity.Bean;
-import com.ep.joy.xutil3.entity.JsonResult;
 import com.ep.joy.xutil3.entity.YourBean;
-import com.ep.joy.xutil3.http.BaseTask;
+import com.ep.joy.xutil3.http.BaseCall;
 import com.ep.joy.xutil3.http.MyCallBack;
-import com.google.gson.reflect.TypeToken;
+import com.ep.joy.xutil3.util.XUtil;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -48,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
         tv.setVisibility(View.VISIBLE);
         RequestParams params = new RequestParams(url);
         params.addQueryStringParameter("pageNo", "1");
-        x.http().post(params, new Callback.CommonCallback<String>() {
+        params.setCacheMaxAge(86400000);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public boolean onCache(String s) {
+                tv.setText(s);
+                Toast.makeText(MainActivity.this, "I am From Cache", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
             @Override
             public void onSuccess(String s) {
                 tv.setText(s);
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void send2(View view) {
         RequestParams params = new RequestParams(url);
         params.addQueryStringParameter("pageNo", "1");
-        x.http().post(params,new MyCallBack<YourBean>(){
+        x.http().post(params, new MyCallBack<YourBean>() {
             @Override
             public void onSuccess(YourBean result) {
                 super.onSuccess(result);
@@ -88,37 +95,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void send(View view) {
-        String url = "http://222.177.210.200/public/news/getNewsList";
         Map<String, Object> map = new HashMap<>();
-        map.put("newsTypeVal", "CC");
-        new BaseTask<JsonResult<Bean>, String>(this, "Loading……") {
+        map.put("pageNo", "1");
 
-            @Override
-            public TypeToken setTypeToken() {
-                return new TypeToken<Bean>() {
-                };
-            }
-
-            @Override
-            public void onSuccess() {
-                if (result.isSuccess()) {
-                    tv.setText(result.getRecord().getNewsList().get(0).getTitle());
-                }
-            }
-        }.requestByPost(url, map);
-
-//        XUtil.Post(url,map,new MyCallBack<JsonResult>(){
+        //String url = "http://222.177.210.200/public/news/getNewsList";
+        //   map.put("newsTypeVal", "CC"); new BaseTask<JsonResult<Bean>, String>(this, "Loading……") {
 //
 //            @Override
-//            public void onSuccess(JsonResult result) {
-//                super.onSuccess(result);
+//            public TypeToken setTypeToken() {
+//                return new TypeToken<Bean>() {
+//                };
 //            }
 //
 //            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                super.onError(ex, isOnCallback);
+//            public void onSuccess() {
+//                if (result.isSuccess()) {
+//                    tv.setText(result.getRecord().getNewsList().get(0).getTitle());
+//                }
 //            }
-//        });
+//        }.requestByPost(url, map);
+
+        XUtil.Post(url, map, new BaseCall<YourBean>(this) {
+
+
+            @Override
+            public void onSuccess(YourBean result) {
+                super.onSuccess(result);
+                tv.setText(result.toString());
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                super.onError(ex, isOnCallback);
+            }
+        });
 
 
     }

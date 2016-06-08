@@ -1,4 +1,4 @@
-package com.ep.joy.xutil3.util;
+package com.ep.joy.xutil3.entity;
 
 /**
  * author   Joy

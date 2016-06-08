@@ -10,19 +10,8 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
     >
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="js"
-        android:text="show"/>
-
-
-    <ImageView
-        android:id="@+id/js_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="#f0f"
-        />
+    <com.youzan.titan.TitanRecyclerView
+        android:id="@+id/rcy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>
