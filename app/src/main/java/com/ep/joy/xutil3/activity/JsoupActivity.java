@@ -46,7 +46,6 @@ public class JsoupActivity extends AppCompatActivity {
     private AppBarLayout mbar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +67,7 @@ public class JsoupActivity extends AppCompatActivity {
             @Override
             public void onItemClick(RecyclerView recyclerView, View view, int position, long id) {
                 ImageInfo img = mQuickAdapter.getItem(position);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(JsoupActivity.this,view,"share");
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(JsoupActivity.this, view, "share");
                 Intent intent = new Intent(JsoupActivity.this, SavaActivity.class);
                 intent.putExtra(SavaActivity.BEAN, img);
                 ActivityCompat.startActivity(JsoupActivity.this, intent, optionsCompat.toBundle());

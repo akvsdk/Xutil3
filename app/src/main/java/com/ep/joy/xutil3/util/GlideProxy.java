@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -14,6 +15,12 @@ import com.ep.joy.xutil3.R;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -160,8 +167,20 @@ public class GlideProxy {
     }
 
     // 清理缓存
-    public static void clear(Context context) {
+    public static void clear(final Context context) {
         Glide.get(context).clearMemory();
+        Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                Glide.get(context).clearDiskCache();
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Toast.makeText(context, "清理成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {

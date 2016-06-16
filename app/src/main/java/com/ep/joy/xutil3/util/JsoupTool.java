@@ -111,7 +111,7 @@ public class JsoupTool {
                 for (Element el : links) {
                     String href = el.attr("href");
                     String title = el.text().trim();
-                    bean.add(new UrlBean(el.attr("href"), title));
+                    bean.add(new UrlBean(href, title));
 
                 }
             }

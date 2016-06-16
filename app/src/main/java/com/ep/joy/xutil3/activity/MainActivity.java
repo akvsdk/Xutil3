@@ -95,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void send(View view) {
+        String url = "http://222.177.210.200/public/news/getNewsList";
         Map<String, Object> map = new HashMap<>();
         map.put("pageNo", "1");
 
-        //String url = "http://222.177.210.200/public/news/getNewsList";
         //   map.put("newsTypeVal", "CC"); new BaseTask<JsonResult<Bean>, String>(this, "Loading……") {
 //
 //            @Override
